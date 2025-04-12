@@ -1,4 +1,16 @@
 # TripMapperDemo
+TripMapperDemo is a dynamic visual mapping tool built with Angular that allows users to plot and differentiate multiple trips between locations based on specific rules. The application visually distinguishes between continued, non-continued, and repeated trips using levels and directional indicators.
+* Key Features
+- Input fields for Start Point and End Point.
+- Each location is represented using the first three characters of the name (e.g., Ban for Bangalore).
+- Visual representation of trips using straight lines or arrows.
+
+* Trip visualization logic:
+- Continued Trip (e.g., Bangalore → Chennai → Ooty): Shown on Level 1 with a straight line
+- Non-Continued Trip (e.g., Bangalore → Chennai, Ooty → Bangalore): Shown on Level 1 with an arrow
+- Consecutive trips with the same start and end point: Shown on Level 2
+
+* Supports adding unlimited trips, with responsive layout adjusting to fit within defined dimensions
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
 
