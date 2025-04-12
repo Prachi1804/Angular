@@ -1,0 +1,123 @@
+<div class="trip-inputs">
+    <!-- <input [(ngModel)]="start" placeholder="Start City" />
+    <input [(ngModel)]="end" placeholder="End City" /> -->
+    <div class="autocomplete-container">
+        <label style="font-weight: 600;">Start City:</label>
+        <input type="text" [(ngModel)]="startSearch" (input)="filterCities('start')" (focus)="showDropdown('start')"
+            (blur)="hideDropdown('start')" placeholder="Search Start City" />
+        <ul class="dropdown" *ngIf="showStartDropdown && filteredStartCities.length">
+            <li *ngFor="let city of filteredStartCities" (mousedown)="selectCity('start', city)">
+                {{ city }}
+            </li>
+        </ul>
+    </div>
+
+    <div class="autocomplete-container" style="margin-left: 2%;">
+        <label style="font-weight: 600;">End City:</label>
+        <input type="text" [(ngModel)]="endSearch" (input)="filterCities('end')" (focus)="showDropdown('end')"
+            (blur)="hideDropdown('end')" placeholder="Search End City" />
+        <ul class="dropdown" *ngIf="showEndDropdown && filteredEndCities.length">
+            <li *ngFor="let city of filteredEndCities" (mousedown)="selectCity('end', city)">
+                {{ city }}
+            </li>
+        </ul>
+    </div>
+
+    <button (click)="addTrip()" class="routeBtn">Add Route</button>
+</div>
+
+<hr class="custom-hr" />
+<div class="legend" style="float: right;margin-bottom: 8px;">
+    <div class="legend-item">
+        <span class="legend-color" style="background-color: #28a745;"></span> Correct Route
+    </div>
+    <div class="legend-item">
+        <span class="legend-color" style="background-color: #888;"></span> Duplicate Route
+    </div>
+    <div class="legend-item">
+        <span class="legend-color" style="background-color: #f90;"></span> Mismatched Route
+    </div>
+</div>
+
+<div class="trip-container">
+    <!-- <svg [attr.width]="(trips.length + 1) * 160" height="220">
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#f90" />
+            </marker>
+        </defs>
+
+        <ng-container *ngFor="let trip of trips; let i = index">
+            <circle [attr.cx]="i * 160 + 60" cy="100" r="6" fill="#333" />
+            <text [attr.x]="i * 160 + 40" y="120" font-size="12">
+                {{ getCode(trip.start) }} → {{ getCode(trip.end) }}
+            </text>
+            <ng-container *ngIf="i < trips.length - 1">
+                <ng-container *ngIf="trip.end === trips[i + 1].start">
+                    <line [attr.x1]="i * 160 + 60" y1="100" [attr.x2]="(i + 1) * 160 + 60" y2="100" stroke="#28a745"
+                        stroke-width="2" />
+                </ng-container>
+
+                <ng-container *ngIf="trip.start === trips[i + 1].start && trip.end === trips[i + 1].end">
+                    <path [attr.d]="
+                        'M' + (i * 160 + 60) + ',100 ' +
+                        'Q' + ((i * 160 + 60 + (i + 1) * 160 + 60) / 2) + ',40 ' +
+                        ((i + 1) * 160 + 60) + ',100'
+                         " stroke="#888" fill="none" stroke-width="2" />
+
+                </ng-container>
+
+                <ng-container
+                    *ngIf="trip.end !== trips[i + 1].start && !(trip.start === trips[i + 1].start && trip.end === trips[i + 1].end)">
+                    <line [attr.x1]="i * 160 + 60" y1="100" [attr.x2]="(i + 1) * 160 + 60" y2="100" stroke="#f90"
+                        stroke-width="2" marker-end="url(#arrowhead)" />
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <circle *ngIf="trips.length > 0" [attr.cx]="trips.length * 160 + 60" cy="100" r="6" fill="#333" style="padding: 5px;"/>
+    </svg> -->
+
+    <svg [attr.width]="(trips.length + 1) * 160" height="220">
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#f90" />
+            </marker>
+        </defs>
+
+        <ng-container *ngFor="let trip of trips; let i = index">
+            <!-- Circle -->
+            <circle [attr.cx]="i * 160 + 60" cy="100" r="6" [attr.fill]="getCircleColor(i)" />
+            <text [attr.x]="i * 160 + 40" y="120" font-size="12" font-family="'Segoe UI', sans-serif"
+                style="font-weight: 600;" [attr.fill]="getCircleColor(i)">
+                {{ getCode(trip.start) }} → {{ getCode(trip.end) }}
+            </text>
+
+            <ng-container *ngIf="i < trips.length - 1">
+                <!-- offset for spacing -->
+                <ng-container *ngIf="trip.end === trips[i + 1].start">
+                    <line [attr.x1]="i * 160 + 60 + 10" y1="100" [attr.x2]="(i + 1) * 160 + 60 - 10" y2="100"
+                        stroke="#28a745" stroke-width="2" />
+                </ng-container>
+
+                <ng-container *ngIf="trip.start === trips[i + 1].start && trip.end === trips[i + 1].end">
+                    <path [attr.d]="
+                  'M' + (i * 160 + 60 + 10) + ',100 ' +
+                  'Q' + ((i * 160 + 60 + (i + 1) * 160 + 60) / 2) + ',40 ' +
+                  ((i + 1) * 160 + 60 - 10) + ',100'
+                " stroke="#888" fill="none" stroke-width="2" />
+                </ng-container>
+
+                <ng-container
+                    *ngIf="trip.end !== trips[i + 1].start && !(trip.start === trips[i + 1].start && trip.end === trips[i + 1].end)">
+                    <line [attr.x1]="i * 160 + 60 + 10" y1="100" [attr.x2]="(i + 1) * 160 + 60 - 10" y2="100"
+                        stroke="#f90" stroke-width="2" marker-end="url(#arrowhead)" />
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+        <!-- Final circle -->
+        <circle *ngIf="trips.length > 0" [attr.cx]="trips.length * 160 + 60" cy="100" r="6" fill="#333" />
+    </svg>
+
+
+</div>

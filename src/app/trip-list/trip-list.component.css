@@ -1,0 +1,123 @@
+:host {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.trip-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.trip-inputs input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.trip-inputs button {
+  padding: 6px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.trip-container {
+  overflow-x: auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+
+.autocomplete-container {
+  position: relative;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.autocomplete-container input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  font-family: "Segoe UI', sans-serif";
+  border-color: #007bff;
+  border-width: 2px;
+  margin-top: 5px
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+.autocomplete-container,
+.autocomplete-container input,
+.autocomplete-container ul,
+.autocomplete-container li {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.routeBtn {
+  margin-left: 2%;
+  margin-top: 1.5%;
+  height: 40px;
+  /* font-family: 'Segoe UI', sans-serif; */
+  font-weight: 700
+}
+
+.custom-hr {
+  border: none;
+  height: 1.5px;
+  /* Thickness */
+  background-color: gray;
+  /* Color */
+  margin: 16px 0;
+  /* Optional spacing */
+}
+
+.trip-inputs-with-legend {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.legend {
+  margin-top: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  margin-right: 8px;
+  border: 1px solid #ccc;
+}
